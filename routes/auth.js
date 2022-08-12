@@ -2,6 +2,7 @@ const router = require("express").Router()
 const User = require("../models/User")
 require("dotenv").config()
 const { MongoClient, ServerApiVersion } = require("mongodb")
+const jwt = require("jsonwebtoken")
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.woosd.mongodb.net/?retryWrites=true&w=majority`
 
@@ -35,7 +36,7 @@ router.post("/register", async (req, res) => {
 })
 
 //======= get all user data ==========//
-router.get("/register", async (req, res) => {
+router.get("/users", async (req, res) => {
   const query = {}
   const cursor = user.find(query)
   const users = await cursor.toArray()
@@ -51,8 +52,17 @@ router.post("/login", async (req, res) => {
     const password = await Luser.password
     password !== req.body.password && res.status(401).json("no user found")
 
-    console.log(Luser)
-    res.status(200).json(Luser)
+    const accessToken = jwt.sign(
+      {
+        id: Luser._id,
+        isAdmin: Luser.isAdmin
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "3h" }
+    )
+
+    // console.log(Luser)
+    res.status(200).json({ ...Luser, accessToken })
   } catch (error) {
     res.status(500).send(error)
   }

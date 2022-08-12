@@ -44,7 +44,7 @@ app.get("/", async (req, res) => {
 })
 
 // external routes//
-app.use("/", userRoute)
+app.use("/users", userRoute)
 app.use("/", authRoute)
 
 app.listen(port, () => {

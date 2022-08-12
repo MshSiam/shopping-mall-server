@@ -36,7 +36,7 @@ router.post("/register", async (req, res) => {
 })
 
 //======= get all user data ==========//
-router.get("/users", async (req, res) => {
+router.get("/register", async (req, res) => {
   const query = {}
   const cursor = user.find(query)
   const users = await cursor.toArray()
@@ -52,13 +52,15 @@ router.post("/login", async (req, res) => {
     const password = await Luser.password
     password !== req.body.password && res.status(401).json("no user found")
 
+    // ============= jwt ===============//
+
     const accessToken = jwt.sign(
       {
         id: Luser._id,
         isAdmin: Luser.isAdmin
       },
       process.env.JWT_SECRET,
-      { expiresIn: "3h" }
+      { expiresIn: "1h" }
     )
 
     // console.log(Luser)

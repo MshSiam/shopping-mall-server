@@ -15,6 +15,8 @@ const client = new MongoClient(uri, {
 const database = client.db("mall")
 const user = database.collection("user")
 
+// update a user//
+
 router.put("/:id", verifuTokenAndAuthorization, async (req, res) => {
   try {
     const filter = { id: user._id }

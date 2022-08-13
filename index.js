@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }))
 // importing external routes
 const userRoute = require("./routes/user")
 const authRoute = require("./routes/auth")
+const productsRoute = require("./routes/product")
 
 const port = process.env.PORT || 4000
 
@@ -46,6 +47,7 @@ app.get("/", async (req, res) => {
 // external routes//
 app.use("/users", userRoute)
 app.use("/", authRoute)
+app.use("/products", productsRoute)
 
 app.listen(port, () => {
   console.log("running", port)

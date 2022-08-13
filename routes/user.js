@@ -2,7 +2,7 @@ const {
   verifuTokenAndAuthorization,
   verifyTokenAndAdmin
 } = require("./verifyToken")
-const { MongoClient, ServerApiVersion } = require("mongodb")
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb")
 
 const router = require("express").Router()
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.woosd.mongodb.net/?retryWrites=true&w=majority`
@@ -49,8 +49,10 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 //GET a USER
 router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const filter = { id: user._id }
-    const Fuser = await user.findOne(filter)
+    const id = req.params.id
+    const query = { _id: ObjectId(id) }
+    console.log(query)
+    const Fuser = await user.findOne(query)
     res.status(200).json(Fuser)
   } catch (err) {
     res.status(500).json(err.message)

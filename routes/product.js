@@ -32,12 +32,39 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
   }
 })
 
+// ============== get all products ==============
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const query = {}
+    console.log(query)
+
+    const cursor = await products.find(query)
+    const result = await cursor.toArray()
+
+    res.status(200).json(result)
+  } catch (error) {
+    res.status(500).json(error.message)
+  }
+})
+// ============== get one product ==============
+router.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id
+    const query = { _id: ObjectId(id) }
+    console.log(query)
+
+    const cursor = await products.findOne(query)
+
+    res.status(200).json(cursor)
+  } catch (error) {
+    res.status(500).json(error.message)
+  }
+})
+
 // update a product
 
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const id = req.params.id
-    const query = { _id: ObjectId(id) }
     const filter = { id: products._id }
     const option = { upsert: false }
 

@@ -1,5 +1,5 @@
 const {
-  verifuTokenAndAuthorization,
+  verifyTokenAndAuthorization,
   verifyTokenAndAdmin
 } = require("./verifyToken")
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb")
@@ -17,7 +17,7 @@ const user = database.collection("user")
 
 // update a user//
 
-router.put("/:id", verifuTokenAndAuthorization, async (req, res) => {
+router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const filter = { id: user._id }
     const option = { upsert: false }

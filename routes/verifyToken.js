@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
   }
 }
 
-const verifuTokenAndAuthorization = (req, res, next) => {
+const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
       next()
@@ -36,6 +36,6 @@ const verifyTokenAndAdmin = (req, res, next) => {
 }
 module.exports = {
   verifyToken,
-  verifuTokenAndAuthorization,
+  verifyTokenAndAuthorization,
   verifyTokenAndAdmin
 }

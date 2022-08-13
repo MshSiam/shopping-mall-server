@@ -35,14 +35,6 @@ router.post("/register", async (req, res) => {
   }
 })
 
-//======= get all user data ==========//
-router.get("/register", async (req, res) => {
-  const query = {}
-  const cursor = user.find(query)
-  const users = await cursor.toArray()
-  res.send(users)
-})
-
 // ================ Login ==================//
 router.post("/login", async (req, res) => {
   try {
@@ -68,6 +60,14 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.status(500).send(error)
   }
+})
+
+//======= get all user data ==========//
+router.get("/users", async (req, res) => {
+  const query = {}
+  const cursor = user.find(query)
+  const users = await cursor.toArray()
+  res.send(users)
 })
 
 module.exports = router

@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const { MongoClient, ServerApiVersion } = require("mongodb")
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb")
 const Product = require("../models/Product")
 const { verifyTokenAndAdmin } = require("./verifyToken")
 
@@ -36,6 +36,8 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
 
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
+    const id = req.params.id
+    const query = { _id: ObjectId(id) }
     const filter = { id: products._id }
     const option = { upsert: false }
 
@@ -45,6 +47,20 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 
     const result = await products.updateOne(filter, updateProduct, option)
     res.status(200).json(result)
+  } catch (error) {
+    res.status(500).json(error.message)
+  }
+})
+
+// ============ delete ==========//
+router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const id = req.params.id
+    const query = { _id: ObjectId(id) }
+    console.log(query)
+
+    const result = await products.deleteOne(query)
+    res.status(200).json("product deleted")
   } catch (error) {
     res.status(500).json(error.message)
   }

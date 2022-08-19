@@ -2,8 +2,9 @@ const express = require("express")
 const app = express()
 require("dotenv").config()
 const { MongoClient, ServerApiVersion } = require("mongodb")
-
+const cors = require("cors")
 //
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -11,6 +12,8 @@ app.use(express.urlencoded({ extended: true }))
 const userRoute = require("./routes/user")
 const authRoute = require("./routes/auth")
 const productsRoute = require("./routes/product")
+const cartRoute = require("./routes/cart")
+const orderRoute = require("./routes/order")
 
 const port = process.env.PORT || 4000
 
@@ -48,6 +51,8 @@ app.get("/", async (req, res) => {
 app.use("/users", userRoute)
 app.use("/", authRoute)
 app.use("/products", productsRoute)
+app.use("/carts", cartRoute)
+app.use("/orders", orderRoute)
 
 app.listen(port, () => {
   console.log("running", port)

@@ -1,7 +1,11 @@
 const router = require("express").Router()
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb")
 const Cart = require("../models/Cart")
-const { verifyToken, verifyTokenAndAuthorization } = require("./verifyToken")
+const {
+  verifyToken,
+  verifyTokenAndAuthorization,
+  verifyTokenAndAdmin
+} = require("./verifyToken")
 
 // connecting to mondodb
 
@@ -35,27 +39,26 @@ router.post("/", verifyToken, async (req, res) => {
 // ============== get user cart ==============
 router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const cart = await cart.findOne({ userId: req.params.userId })
+    const carts = await cart.findOne({ userId: req.params.userId })
 
-    res.status(200).json(cart)
+    res.status(200).json(carts)
   } catch (error) {
     res.status(500).json(error.message)
   }
 })
 // // ============== get all cart ==============
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const id = req.params.id
-//     const query = { _id: ObjectId(id) }
-//     console.log(query)
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const query = {}
+    console.log(query)
 
-//     const cursor = await products.findOne(query)
+    const cursor = await cart.findOne(query)
 
-//     res.status(200).json(cursor)
-//   } catch (error) {
-//     res.status(500).json(error.message)
-//   }
-// })
+    res.status(200).json(cursor)
+  } catch (error) {
+    res.status(500).json(error.message)
+  }
+})
 
 // update a product
 

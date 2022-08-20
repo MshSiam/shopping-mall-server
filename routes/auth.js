@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
         isAdmin: Luser.isAdmin
       },
       process.env.JWT_SECRET,
-      { expiresIn: "3d" }
+      { expiresIn: "30d" }
     )
 
     // console.log(Luser)

@@ -33,7 +33,7 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
 })
 
 // ============== get all products ==============
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const query = {}
     console.log(query)

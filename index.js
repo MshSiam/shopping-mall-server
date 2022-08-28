@@ -14,6 +14,7 @@ const authRoute = require("./routes/auth")
 const productsRoute = require("./routes/product")
 const cartRoute = require("./routes/cart")
 const orderRoute = require("./routes/order")
+const paymentRoute = require("./routes/stripe")
 
 const port = process.env.PORT || 4000
 
@@ -53,6 +54,7 @@ app.use("/", authRoute)
 app.use("/products", productsRoute)
 app.use("/carts", cartRoute)
 app.use("/orders", orderRoute)
+app.use("/checkout", paymentRoute)
 
 app.listen(port, () => {
   console.log("running", port)

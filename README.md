@@ -8,7 +8,8 @@ This is fullstack web application using react js, styled components, axios, node
 ## Features
 
 - Fully Responsive  
-- Any user add products to his cart don't need to login / signup.
+- Any user add products to his cart.
+- User can increase, decrease or delete products from the cart
 - User can see his cart details and order.
 - Stripe is used to pay the price of the products.
 
